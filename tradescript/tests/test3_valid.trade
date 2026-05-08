@@ -1,0 +1,46 @@
+# Test Program 3 — backtest, complex expressions, let, assignments
+
+portfolio divPort {
+    position GARAN: 500 shares at 42.30 dividend: 8.5% sector: "banking"
+    position EREGL: 250 shares at 55.80 dividend: 6.2% sector: "steel"
+    position TUPRS: 100 shares at 180.0 dividend: 5.0% sector: "energy"
+    budget:   150000.0
+    currency: TRY
+    exchange: BIST
+}
+
+func positionValue(shares: int, price: float) -> float {
+    return shares * price
+}
+
+func isHighYield(div: float, threshold: float) -> bool {
+    return div > threshold
+}
+
+strategy DividendFocus(minYield: float, stopPct: float) for divPort {
+    let gainTarget = 15%
+    let stopTarget = stopPct
+
+    when ATR(GARAN, 14) crosses_below 2.0 and RSI(GARAN, 14) < 40.0 -> {
+        buy(GARAN, 20)
+        apply stopLoss(stopTarget)
+    }
+    when EMA(EREGL, 20) crosses_above EMA(EREGL, 50) -> buy(EREGL, 15)
+    when RSI(TUPRS, 14) > 75.0 -> sell(TUPRS, 30)
+    apply takeProfit(gainTarget)
+}
+
+backtest DividendFocus {
+    from: "2023-01-01"
+    to:   "2025-12-31"
+    show: total_return, sharpe_ratio, win_rate, max_drawdown
+}
+
+simulate divPort with DividendFocus {
+    from:      "2026-05-04"
+    horizon:   1 years
+    scenarios: 2000
+    method:    historical
+    inflation: 40%
+    show:      expected_value, best_case, worst_case, dividend_income
+}

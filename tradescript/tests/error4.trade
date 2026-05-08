@@ -1,0 +1,4 @@
+# error4.trade — Missing return type in func declaration
+func badFunc(x: float) {
+    return x * 2.0
+}

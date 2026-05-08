@@ -1,0 +1,5 @@
+# error1.trade — Missing closing brace in portfolio block
+portfolio badPort {
+    position AKSA: 100 shares at 7.95
+    budget: 50000.0
+# Missing closing }

@@ -1,0 +1,5 @@
+# error2.trade — Invalid ticker (lowercase)
+portfolio myPort {
+    position aksa: 100 shares at 7.95
+    budget: 50000.0
+}

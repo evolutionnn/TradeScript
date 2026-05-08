@@ -1,0 +1,33 @@
+# Compiled C files
+*.o
+*.out
+*.a
+*.so
+*.exe
+
+# Build output
+analyzer
+reader
+dispatcher
+aggregator
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log

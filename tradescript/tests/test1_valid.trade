@@ -1,0 +1,29 @@
+# Test Program 1 — Portfolio + Strategy + Simulate
+# Exercises: portfolio, position, strategy, when, apply, simulate
+
+portfolio myPort {
+    position AKSA:  1305 shares at 7.95  dividend: 3.2%  sector: "chemicals"
+    position AKSEN: 125  shares at 30.66 dividend: 0.0%  sector: "energy"
+    position ALARK: 140  shares at 67.00 dividend: 5.1%  sector: "holding"
+    budget:   50000.0
+    currency: TRY
+    exchange: BIST
+}
+
+strategy Crossover(fast: int, slow: int) for myPort {
+    when SMA(AKSA, fast) crosses_above SMA(AKSA, slow) -> buy(AKSA, 10)
+    when RSI(AKSEN, 14) > 70.0 -> {
+        sell(AKSEN, 50)
+        apply stopLoss(5%)
+    }
+    apply takeProfit(15%)
+}
+
+simulate myPort with Crossover {
+    from:      "2026-05-04"
+    horizon:   30 days
+    scenarios: 1000
+    method:    montecarlo
+    inflation: 45%
+    show:      expected_value, worst_case, var_95
+}

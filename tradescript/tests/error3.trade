@@ -1,0 +1,4 @@
+# error3.trade — Missing arrow in when statement
+strategy BadStrat() for myPort {
+    when RSI(AKSA, 14) > 70.0 sell(AKSA, 10)
+}

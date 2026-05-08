@@ -1,0 +1,46 @@
+# Test Program 2 — func, indicator, for loop, if/else
+
+portfolio techPort {
+    position ASELS: 200 shares at 95.50 dividend: 1.5% sector: "defense"
+    position KCHOL: 300 shares at 120.0 dividend: 4.2% sector: "holding"
+    budget: 80000.0
+    currency: TRY
+    exchange: BIST
+}
+
+func sharpeRatio(ret: float, riskFree: float, vol: float) -> float {
+    let excess = ret - riskFree
+    return excess / vol
+}
+
+indicator Momentum(symbol: string, days: int) -> float {
+    let prices = history(symbol, days)
+    return (prices[days - 1] / prices[0] - 1.0) * 100.0
+}
+
+strategy RiskAware(threshold: float) for techPort {
+    for each pos in techPort {
+        if RSI(pos.symbol, 14) < 30.0 {
+            buy(pos.symbol, 10)
+        } else if RSI(pos.symbol, 14) > 70.0 {
+            sell(pos.symbol, 10)
+        }
+    }
+    when Momentum(ASELS, 20) > threshold -> buy(ASELS, 5)
+    apply stopLoss(8%)
+}
+
+forecast ASELS {
+    from:      "2026-05-04"
+    horizon:   14 days
+    scenarios: 500
+    method:    geometric
+    show:      expected_price, trend
+}
+
+recommend for techPort {
+    goal:         "maximize_return"
+    risk:         "moderate"
+    horizon:      90 days
+    min_dividend: 2%
+}

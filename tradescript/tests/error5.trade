@@ -1,0 +1,4 @@
+# error5.trade — Invalid character in source
+portfolio myPort {
+    position AKSA: 100 shares at 7.95 @dividend: 3.2%
+}
