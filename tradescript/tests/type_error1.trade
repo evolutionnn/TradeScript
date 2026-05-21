@@ -1,0 +1,11 @@
+# type_error1.trade — Adding percent to float (forbidden coercion)
+portfolio myPort {
+    position AKSA: 100 shares at 7.95 dividend: 3.2%
+    budget: 50000.0
+    currency: TRY
+    exchange: BIST
+}
+
+func badCalc(price: float) -> float {
+    return price + 5%
+}

@@ -1,0 +1,11 @@
+# type_error2.trade — Passing int where string is expected
+portfolio myPort {
+    position AKSA: 100 shares at 7.95
+    budget: 50000.0
+    currency: TRY
+    exchange: BIST
+}
+
+strategy BadStrat for myPort {
+    when RSI(123, 14) > 70.0 -> sell(AKSA, 10)
+}

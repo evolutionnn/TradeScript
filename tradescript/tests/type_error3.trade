@@ -1,0 +1,11 @@
+# type_error3.trade — when condition is not boolean
+portfolio myPort {
+    position AKSA: 100 shares at 7.95
+    budget: 50000.0
+    currency: TRY
+    exchange: BIST
+}
+
+strategy BadLogic for myPort {
+    when price(AKSA) -> buy(AKSA, 10)
+}

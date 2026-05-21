@@ -17,7 +17,7 @@ func isHighYield(div: float, threshold: float) -> bool {
     return div > threshold
 }
 
-strategy DividendFocus(minYield: float, stopPct: float) for divPort {
+strategy DividendFocus(minYield: percent, stopPct: percent) for divPort {
     let gainTarget = 15%
     let stopTarget = stopPct
 
